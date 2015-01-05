@@ -24,10 +24,43 @@ public class Deck : MonoBehaviour {
 				deckList.Add (newCard);
 			}
 		}
+		this.Shuffle ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	public void Shuffle() {
+		List<GameObject> newList = new List<GameObject> ();
+		for (int i = 0; i < deckList.Count; i++) {
+			newList.Add (null);
+		}
+
+		System.Random random = new System.Random ();
+
+		foreach (GameObject card in deckList) {
+			int index = random.Next(0, deckList.Count);
+			bool placed = false;
+
+			while (!placed) {
+				if (newList[index] == null) {
+
+					placed = true;
+					newList[index] = card;
+				}
+				else {
+					if (index >= deckList.Count - 1) {
+						index = 0;
+					}
+					else {
+						index++;
+					}
+				}
+			}
+		}
+
+		deckList = newList;
 	}
 }
